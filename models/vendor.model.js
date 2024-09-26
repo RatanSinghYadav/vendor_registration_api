@@ -51,4 +51,4 @@ const VendorRegistration = sequelize.define('VendorRegistration', {
     timestamps: false
 });
 
-module.exports = VendorRegistration;
+// module.exports = VendorRegistration;
