@@ -27,7 +27,7 @@ const addVendor = async (req, res) => {
     try {
         console.log(name, email)
 
-        const formLink = `http://localhost:3000/form/${email}`;
+        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/form/${email}`;
 
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
@@ -49,7 +49,7 @@ const addVendor = async (req, res) => {
 
         // console.log(vendor._id)
 
-        const vendorLink = `http://localhost:3000/vendor/form/${vendor._id}`
+        const vendorLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
 
         // Email Send Functionality
         let transporter = nodemailer.createTransport({
