@@ -27,7 +27,7 @@ const addVendor = async (req, res) => {
     try {
         console.log(name, email)
 
-        const formLink = `http://localhost:3000/form/${email}`;
+        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/form/${email}`;
 
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
@@ -49,7 +49,7 @@ const addVendor = async (req, res) => {
 
         // console.log(vendor._id)
 
-        const vendorLink = `http://localhost:3000/vendor/form/${vendor._id}`
+        const vendorLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
 
         // Email Send Functionality
         let transporter = nodemailer.createTransport({
@@ -76,7 +76,7 @@ const addVendor = async (req, res) => {
 
 const getVendorsData = async (req, res) => {
     try {
-        const vendor = await Vendor.find();
+        const vendor = await Vendor.find().sort({ createdAt: -1 });
         // console.log(vendor);
         res.status(201).json({ success: true, message: 'vendors data find successfuly...', vendor });
     } catch (error) {
@@ -92,16 +92,52 @@ const vendorForm = async (req, res) => {
     const body = req.body; // Other form fields
 
     try {
-        // Upload all required files to Cloudinary
-        const incorporationCertificate = files.incorporationCertificateFile ? await cloudinary.uploader.upload(files.incorporationCertificateFile[0].path, { folder: 'vendor_documents' }) : null;
-        const bankAccountCancelChequeFile = files.bankAccountCancelChequeFile ? await cloudinary.uploader.upload(files.bankAccountCancelChequeFile[0].path, { folder: 'vendor_documents' }) : null;
-        const gstRegistrationCertificate = files.gstRegistrationCertificateFile ? await cloudinary.uploader.upload(files.gstRegistrationCertificateFile[0].path, { folder: 'vendor_documents' }) : null;
-        const principalBusinessProof = files.principalBusinessProofFile ? await cloudinary.uploader.upload(files.principalBusinessProofFile[0].path, { folder: 'vendor_documents' }) : null;
-        const msmeCertificate = files.msmeCertificateFile ? await cloudinary.uploader.upload(files.msmeCertificateFile[0].path, { folder: 'vendor_documents' }) : null;
-        const pan = files.panFile ? await cloudinary.uploader.upload(files.panFile[0].path, { folder: 'vendor_documents' }) : null;
 
-        // console.log("Uploading incorporation certificate:", bankAccountCancelChequeFile);
-        // console.log("Incorporation Certificate Upload Result:", incorporationCertificate);
+        // Upload all required files to Cloudinary
+        const incorporationCertificate = files.incorporationCertificateFile
+            ? await cloudinary.uploader.upload(files.incorporationCertificateFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto" // Ensure auto files like PDFs can be uploaded
+            })
+            : null;
+
+        const bankAccountCancelChequeFile = files.bankAccountCancelChequeFile
+            ? await cloudinary.uploader.upload(files.bankAccountCancelChequeFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto"
+            })
+            : null;
+
+        const gstRegistrationCertificate = files.gstRegistrationCertificateFile
+            ? await cloudinary.uploader.upload(files.gstRegistrationCertificateFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto"
+            })
+            : null;
+
+        const principalBusinessProof = files.principalBusinessProofFile
+            ? await cloudinary.uploader.upload(files.principalBusinessProofFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto"
+            })
+            : null;
+
+        const msmeCertificate = files.msmeCertificateFile
+            ? await cloudinary.uploader.upload(files.msmeCertificateFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto"
+            })
+            : null;
+
+        const pan = files.panFile
+            ? await cloudinary.uploader.upload(files.panFile[0].path, {
+                folder: 'vendor_documents',
+                resource_type: "auto"
+            })
+            : null;
+
+        console.log("Uploading incorporation certificate:", bankAccountCancelChequeFile);
+        console.log("Incorporation Certificate Upload Result:", incorporationCertificate);
 
 
 
