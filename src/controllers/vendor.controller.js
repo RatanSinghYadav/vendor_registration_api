@@ -27,6 +27,7 @@ const addVendor = async (req, res) => {
     try {
         // console.log(name, email)
 
+        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${email}`;
         
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
@@ -46,9 +47,8 @@ const addVendor = async (req, res) => {
         
         const vendor = await newVendor.save();
 
-        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`;
         
-        // console.log(vendor._id)
+        // console.log(vendor)
 
         const vendorLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
 
