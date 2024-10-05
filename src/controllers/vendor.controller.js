@@ -25,10 +25,9 @@ const addVendor = async (req, res) => {
         purchaseCategory, paymentTerms
     } = req.body;
     try {
-        console.log(name, email)
+        // console.log(name, email)
 
-        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`;
-
+        
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
             name, email, companyName, proprietorName, businessNature, turnoverInLakhs,
@@ -44,9 +43,11 @@ const addVendor = async (req, res) => {
             purchaseType, purchaseCategory, paymentTerms,
             formLink // Also adding formLink to the vendor
         });
-
+        
         const vendor = await newVendor.save();
 
+        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`;
+        
         // console.log(vendor._id)
 
         const vendorLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
