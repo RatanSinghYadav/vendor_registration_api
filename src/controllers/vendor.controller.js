@@ -20,15 +20,14 @@ const addVendor = async (req, res) => {
         branchEmail, branchCountry, branchState, branchCity, branchPin, firmType,
         sisterConcernDetails, otherUnitsDetails, transactionWithOtherUnits, incorporationCertificate,
         registeredMSME, pan, businessAddressProof, bankAccountDetails, gstCertificate, bankName,
-        accountName, accountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
+        accountName, accountNumber, confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
         gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile, purchaseType,
         purchaseCategory, paymentTerms
     } = req.body;
     try {
-        console.log(name, email)
+        // console.log(name, email)
 
-        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/form/${email}`;
-
+        
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
             name, email, companyName, proprietorName, businessNature, turnoverInLakhs,
@@ -39,14 +38,16 @@ const addVendor = async (req, res) => {
             sisterConcernDetails, otherUnitsDetails, transactionWithOtherUnits,
             incorporationCertificate, registeredMSME, pan, businessAddressProof,
             bankAccountDetails, gstCertificate, bankName, accountName, accountNumber,
-            bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
+            confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
             gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile,
             purchaseType, purchaseCategory, paymentTerms,
             formLink // Also adding formLink to the vendor
         });
-
+        
         const vendor = await newVendor.save();
 
+        const formLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`;
+        
         // console.log(vendor._id)
 
         const vendorLink = `https://vendor-registration-app-avhtgsbccpd5a3hq.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
@@ -184,6 +185,7 @@ const vendorForm = async (req, res) => {
                 bankName: body.bankName,
                 accountName: body.accountName,
                 accountNumber: body.accountNumber,
+                confirmAccountNumber: body.confirmAccountNumber,
                 bankIFSC: body.bankIFSC,
                 businessAddressProof: body.businessAddressProof,
                 registeredMSME: body.registeredMSME,
@@ -291,12 +293,50 @@ const deleteVendorById = async (req, res) => {
     }
 }
 
+const bankDetailApproved = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+
+        const vendor = await Vendor.findByIdAndUpdate({ _id: id }, { approveBankDetail: "approved" }, { new: true });
+
+        if (!vendor) {
+            res.status(404).json({ success: false, message: 'faild to approved bank detail!' });
+            return
+        }
+
+        res.status(201).json({ success: true, message: 'approved by purchase department', vendor })
+    } catch (error) {
+        console.log("faild to approve bank details ", error);
+        res.status(404).json({ success: false, message: 'faild to approve bank details', error })
+    }
+}
+
+const vendorApproved = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+
+        const vendor = await Vendor.findByIdAndUpdate({ _id: id }, { vendorApproved: "approved" }, { new: true });
+
+        if (!vendor) {
+            res.status(404).json({ success: false, message: 'faild to approved vendor' });
+            return
+        }
+
+        res.status(201).json({ success: true, message: 'approved by purchase department', vendor })
+    } catch (error) {
+        console.log("faild to approve bank details ", error);
+        res.status(404).json({ success: false, message: 'faild to approve bank details', error })
+    }
+}
+
 const approvedByPurchase = async (req, res) => {
     try {
         const { id } = req.params;
         const { purchaseType, purchaseCategory, paymentTerms } = req.body;
 
-        console.log(id);
+        // console.log(id);
         console.log(purchaseType, purchaseCategory, paymentTerms);
 
         const vendor = await Vendor.findByIdAndUpdate(
@@ -330,5 +370,7 @@ module.exports = {
     getVendorById,
     deleteVendorById,
     approvedByPurchase,
-    downloadVendorFileById
+    downloadVendorFileById,
+    bankDetailApproved,
+    vendorApproved
 }

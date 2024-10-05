@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const route = Router();
-const { addVendor, vendorForm, getVendorsData, getVendorById, deleteVendorById, approvedByPurchase, downloadVendorFileById } = require("../controllers/vendor.controller.js");
+const { addVendor, vendorForm, getVendorsData, getVendorById, deleteVendorById, approvedByPurchase, downloadVendorFileById, bankDetailApproved, vendorApproved } = require("../controllers/vendor.controller.js");
 
 // Multer setup for handling file uploads
 const multer = require('multer');
@@ -17,7 +17,11 @@ route.get("/api/vendor/details/:id", getVendorById)
 
 route.delete("/api/vendor/delete/:id", deleteVendorById);
 
-route.post("/api/vendor/purchase/:id", approvedByPurchase)
+route.post("/api/vendor/purchase/:id", approvedByPurchase);
+
+route.post("/api/vendor/purchase/bankDetailApproved/:id", bankDetailApproved);
+
+route.post("/api/vendor/purchase/approvedVendor/:id", vendorApproved);
 
 route.get("/api/vendor/download/:field/:id", downloadVendorFileById)
 

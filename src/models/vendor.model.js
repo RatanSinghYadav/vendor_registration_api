@@ -1,91 +1,94 @@
 const mongoose = require("mongoose");
 
 const vendorSchema = new mongoose.Schema({
-    name: { type: String, default: '-', required: true },
-    email: { type: String, default: '-', required: true },
+    name: { type: String, default: null, required: true },
+    email: { type: String, default: null, required: true },
     status: { type: String, default: "pending" }, // Default status as Pending
-    formLink: { type: String, default: '-', }, // To store form link
-    companyName: { type: String, default: '-',  },
-    proprietorName: { type: String, default: '-',  },
-    businessNature: { type: String, default: '-',  },
-    turnoverInLakhs: { type: String,  },
-    yearsInBusiness: { type: String,  },
-    workspaceArea: { type: String, default: '-',  },
-    companyAddress: { type: String, default: '-',  },
-    companyTelephone: { type: String, default: '-', },
-    companyMobile: { type: String, default: '-',  },
-    companyPersonEmail: { type: String, default: '-',  },
-    companyEmail: { type: String, default: '-',  },
-    companyCountry: { type: String, default: '-',  },
-    companyState: { type: String, default: '-',  },
-    companyCity: { type: String, default: '-',  },
-    companyPin: { type: String, default: '-',  },
-    branchAddress: { type: String, default: '-', },
-    branchTelephone: { type: String, default: '-', },
-    branchMobile: { type: String, default: '-', },
-    branchPersonEmail: { type: String, default: '-', }, 
-    branchEmail: { type: String, default: '-', },
-    branchCountry: { type: String, default: '-', }, 
-    branchState: { type: String, default: '-', },
-    branchCity: { type: String, default: '-', },
-    branchPin: { type: String, default: '-', },
-    firmType: { type: String, default: '-',  },
-    sisterConcernDetails: { type: String, default: '-', },
-    otherUnitsDetails: { type: String, default: '-', },
-    transactionWithOtherUnits: { type: String, default: '-', },
-    incorporationCertificate: { type: String, default: '-', },
-    registeredMSME: { type: String, default: '-', },
-    pan: { type: String, default: '-', },
-    businessAddressProof: { type: String, default: '-', },
-    bankAccountDetails: { type: String, default: '-', },
-    gstCertificate: { type: String, default: '-', },
-    bankName: { type: String, default: '-',  },
-    accountName: { type: String, default: '-',  },
-    accountNumber: { type: String, default: '-',  },
-    bankIFSC: { type: String, default: '-',  },
+    approveBankDetail: { type: String, default: "pending" },
+    vendorApproved: { type: String, default: "pending" },
+    formLink: { type: String, default: null, }, // To store form link
+    companyName: { type: String, default: null, },
+    proprietorName: { type: String, default: null, },
+    businessNature: { type: String, default: null, },
+    turnoverInLakhs: { type: String, },
+    yearsInBusiness: { type: String, },
+    workspaceArea: { type: String, default: null, },
+    companyAddress: { type: String, default: null, },
+    companyTelephone: { type: String, default: null, },
+    companyMobile: { type: String, default: null, },
+    companyPersonEmail: { type: String, default: null, },
+    companyEmail: { type: String, default: null, },
+    companyCountry: { type: String, default: null, },
+    companyState: { type: String, default: null, },
+    companyCity: { type: String, default: null, },
+    companyPin: { type: String, default: null, },
+    branchAddress: { type: String, default: null, },
+    branchTelephone: { type: String, default: null, },
+    branchMobile: { type: String, default: null, },
+    branchPersonEmail: { type: String, default: null, },
+    branchEmail: { type: String, default: null, },
+    branchCountry: { type: String, default: null, },
+    branchState: { type: String, default: null, },
+    branchCity: { type: String, default: null, },
+    branchPin: { type: String, default: null, },
+    firmType: { type: String, default: null, },
+    sisterConcernDetails: { type: String, default: null, },
+    otherUnitsDetails: { type: String, default: null, },
+    transactionWithOtherUnits: { type: String, default: null, },
+    incorporationCertificate: { type: String, default: null, },
+    registeredMSME: { type: String, default: null, },
+    pan: { type: String, default: null, },
+    businessAddressProof: { type: String, default: null, },
+    bankAccountDetails: { type: String, default: null, },
+    gstCertificate: { type: String, default: null, },
+    bankName: { type: String, default: null, },
+    accountName: { type: String, default: null, },
+    accountNumber: { type: String, default: null, },
+    confirmAccountNumber: { type: String, default: null },
+    bankIFSC: { type: String, default: null, },
     // New fields for file uploads
     incorporationCertificateFile: {
         type: String,
         default: null, // Path to the file
-        
+
     },
     bankAccountCancelChequeFile: {
         type: String,
         default: null,
-        
+
     },
     gstRegistrationCertificateFile: {
         type: String,
         default: null,
-        
+
     },
     principalBusinessProofFile: {
         type: String,
         default: null,
-        
+
     },
     msmeCertificateFile: {
         type: String,
         default: null,
-        
+
     },
     panFile: {
         type: String,
         default: null,
-        
+
     },
     // For BBPL use only
     purchaseType: {
         type: String,
-        default: '-',
+        default: null,
     },
     purchaseCategory: {
         type: String,
-        default: '-',
+        default: null,
     },
     paymentTerms: {
         type: String,
-        default: '-',
+        default: null,
     }
 }, {
     timestamps: true
