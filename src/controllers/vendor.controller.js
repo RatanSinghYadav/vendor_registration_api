@@ -50,7 +50,7 @@ const addVendor = async (req, res) => {
 
         console.log(vendor)
 
-        const vendorLink = `https://brlyapps-btdmbcajh3hfcwdb.centralindia-01.azurewebsites.net/${vendor._id}`
+        const vendorLink = `https://brlyapps-btdmbcajh3hfcwdb.centralindia-01.azurewebsites.net/vendor/form/${vendor._id}`
 
         // Email Send Functionality
         let transporter = nodemailer.createTransport({
