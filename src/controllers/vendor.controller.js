@@ -191,6 +191,7 @@ const vendorForm = async (req, res) => {
                 registeredMSME: body.registeredMSME,
                 pan: body.pan,
                 bankAccountDetails: body.bankAccountDetails,
+                incorporationCertificate: body.incorporationCertificate,
                 gstCertificate: body.gstCertificate,
             },
             { new: true }
