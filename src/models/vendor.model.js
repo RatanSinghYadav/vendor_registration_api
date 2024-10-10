@@ -46,6 +46,7 @@ const vendorSchema = new mongoose.Schema({
     accountNumber: { type: String, default: null, },
     confirmAccountNumber: { type: String, default: null },
     bankIFSC: { type: String, default: null, },
+    vendorApprovedBy: { type: String, default: null },
     // New fields for file uploads
     incorporationCertificateFile: {
         type: String,

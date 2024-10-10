@@ -22,7 +22,7 @@ const addVendor = async (req, res) => {
         registeredMSME, pan, businessAddressProof, bankAccountDetails, gstCertificate, bankName,
         accountName, accountNumber, confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
         gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile, purchaseType,
-        purchaseCategory, paymentTerms
+        purchaseCategory, paymentTerms, vendorApprovedBy
     } = req.body;
     try {
         console.log(name, email)
@@ -41,7 +41,7 @@ const addVendor = async (req, res) => {
             bankAccountDetails, gstCertificate, bankName, accountName, accountNumber,
             confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
             gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile,
-            purchaseType, purchaseCategory, paymentTerms,
+            purchaseType, purchaseCategory, paymentTerms, vendorApprovedBy,
             formLink // Also adding formLink to the vendor
         });
 
@@ -337,10 +337,10 @@ const vendorApproved = async (req, res) => {
 const approvedByPurchase = async (req, res) => {
     try {
         const { id } = req.params;
-        const { purchaseType, purchaseCategory, paymentTerms } = req.body;
+        const { purchaseType, purchaseCategory, paymentTerms, vendorApprovedBy } = req.body;
 
         // console.log(id);
-        console.log(purchaseType, purchaseCategory, paymentTerms);
+        // console.log(purchaseType, purchaseCategory, paymentTerms, vendorApprovedBy);
 
         const vendor = await Vendor.findByIdAndUpdate(
             { _id: id },
@@ -348,6 +348,7 @@ const approvedByPurchase = async (req, res) => {
                 purchaseType: purchaseType,
                 purchaseCategory: purchaseCategory,
                 paymentTerms: paymentTerms,
+                vendorApprovedBy: vendorApprovedBy,
                 status: "approved"
             },
             { new: true },
