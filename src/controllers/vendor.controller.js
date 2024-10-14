@@ -367,6 +367,147 @@ const approvedByPurchase = async (req, res) => {
     }
 }
 
+
+const editVendorDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = req.body;
+
+        // console.log(
+        //     id,
+        //     // Company Profile
+        //     body.vendorCode,
+        //     body.companyName,
+        //     body.proprietorName,
+        //     body.businessNature,
+        //     body.turnoverInLakhs,
+        //     body.yearsInBusiness,
+        //     body.workspaceArea,
+        //     // Corporate/registerd office Postal Address
+        //     body.companyMobile,
+        //     body.companyTelephone,
+        //     body.companyPersonEmail,
+        //     body.companyEmail,
+        //     body.companyCountry,
+        //     body.companyState,
+        //     body.companyCity,
+        //     body.companyPin,
+        //     body.companyAddress,
+        //     // Name and address of local representative
+        //     body.branchMobile,
+        //     body.branchTelephone,
+        //     body.branchPersonEmail,
+        //     body.branchEmail,
+        //     body.branchCountry,
+        //     body.branchState,
+        //     body.branchCity,
+        //     body.branchPin,
+        //     body.branchAddress,
+        //     // Bank Details
+        //     body.bankName,
+        //     body.accountName,
+        //     body.accountNumber,
+        //     body.confirmAccountNumber,
+        //     body.bankIFSC,
+        //     // Company other Details
+        //     body.firmType,
+        //     body.sisterConcernDetails, 
+        //     body.otherUnitsDetails, 
+        //     body.transactionWithOtherUnits,
+        //     // documents details 
+        //     body.incorporationCertificate,
+        //     body.registeredMSME,
+        //     body.pan,
+        //     body.businessAddressProof,
+        //     body.bankAccountDetails,
+        //     body.gstCertificate,
+        //     // For BBPL use only
+        //     body.purchaseType,
+        //     body.purchaseCategory,
+        //     body.paymentTerms, 
+        //     body.vendorApprovedBy,
+        // )
+
+        // Ensure that the ID is valid and provided
+        if (!id) {
+            return res.status(400).json({ success: false, message: 'Vendor ID is required' });
+        }
+
+        // Update vendor details with PATCH method
+        const vendor = await Vendor.findByIdAndUpdate(
+            { _id: id }, // ID filter
+            {
+                // Company Profile
+                vendorCode: req.body.vendorCode,
+                companyName: req.body.companyName,
+                proprietorName: req.body.proprietorName,
+                businessNature: req.body.businessNature,
+                turnoverInLakhs: req.body.turnoverInLakhs,
+                yearsInBusiness: req.body.yearsInBusiness,
+                workspaceArea: req.body.workspaceArea,
+                // Corporate/registerd office Postal Address
+                companyMobile: req.body.companyMobile,
+                companyTelephone: req.body.companyTelephone,
+                companyPersonEmail: req.body.companyPersonEmail,
+                companyEmail: req.body.companyEmail,
+                companyCountry: req.body.companyCountry,
+                companyState: req.body.companyState,
+                companyCity: req.body.companyCity,
+                companyPin: req.body.companyPin,
+                companyAddress: req.body.companyAddress,
+                // Name and address of local representative
+                branchMobile: req.body.branchMobile,
+                branchTelephone: req.body.branchTelephone,
+                branchPersonEmail: req.body.branchPersonEmail,
+                branchEmail: req.body.branchEmail,
+                branchCountry: req.body.branchCountry,
+                branchState: req.body.branchState,
+                branchCity: req.body.branchCity,
+                branchPin: req.body.branchPin,
+                branchAddress: req.body.branchAddress,
+                // Bank Details
+                bankName: req.body.bankName,
+                accountName: req.body.accountName,
+                accountNumber: req.body.accountNumber,
+                confirmAccountNumber: req.body.confirmAccountNumber,
+                bankIFSC: req.body.bankIFSC,
+                // Company other Details
+                firmType: req.body.firmType,
+                sisterConcernDetails: req.body.sisterConcernDetails,
+                otherUnitsDetails: req.body.otherUnitsDetails,
+                transactionWithOtherUnits: req.body.transactionWithOtherUnits,
+                // documents details
+                incorporationCertificate: req.body.incorporationCertificate,
+                registeredMSME: req.body.registeredMSME,
+                pan: req.body.pan,
+                businessAddressProof: req.body.businessAddressProof,
+                bankAccountDetails: req.body.bankAccountDetails,
+                gstCertificate: req.body.gstCertificate,
+                // For BBPL use only
+                purchaseType: req.body.purchaseType,
+                purchaseCategory: req.body.purchaseCategory,
+                paymentTerms: req.body.paymentTerms,
+                vendorApprovedBy: req.body.vendorApprovedBy,
+            },
+            { new: true, runValidators: true } // Ensures updated doc is returned and validations run
+        );
+
+        // If vendor not found
+        if (!vendor) {
+            return res.status(404).json({ success: false, message: 'Vendor not found' });
+        }
+
+        // Successfully updated
+        res.status(200).json({ success: true, message: 'Vendor details updated successfully', vendor });
+
+    } catch (error) {
+        console.error("Failed to update vendor details", error);
+        res.status(500).json({ success: false, message: 'Failed to update vendor details', error });
+    }
+};
+
+
+
 module.exports = {
     addVendor,
     vendorForm,
@@ -376,5 +517,6 @@ module.exports = {
     approvedByPurchase,
     downloadVendorFileById,
     bankDetailApproved,
-    vendorApproved
+    vendorApproved,
+    editVendorDetails
 }
