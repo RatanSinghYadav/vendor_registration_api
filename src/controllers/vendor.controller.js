@@ -371,7 +371,7 @@ const approvedByPurchase = async (req, res) => {
 const editVendorDetails = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = req.body;
+        // const body = req.body;
 
         // console.log(
         //     id,
