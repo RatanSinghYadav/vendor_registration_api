@@ -1,6 +1,10 @@
 const { Router } = require('express');
 const route = Router();
-const { addVendor, vendorForm, getVendorsData, getVendorById, deleteVendorById, approvedByPurchase, downloadVendorFileById, bankDetailApproved, vendorApproved } = require("../controllers/vendor.controller.js");
+const { addVendor, vendorForm,
+    getVendorsData, getVendorById,
+    deleteVendorById, approvedByPurchase,
+    downloadVendorFileById, bankDetailApproved, vendorApproved,
+    editVendorDetails } = require("../controllers/vendor.controller.js");
 
 // Multer setup for handling file uploads
 const multer = require('multer');
@@ -13,12 +17,17 @@ route.get("/api/vendors", getVendorsData);
 // Add vendor route (without file uploads)
 route.post("/api/vendors/add", addVendor);
 
+// api for fetch vendor details
 route.get("/api/vendor/details/:id", getVendorById)
 
+// api for vendor delete
 route.delete("/api/vendor/delete/:id", deleteVendorById);
 
+
+// api for vendor approval
 route.post("/api/vendor/purchase/:id", approvedByPurchase);
 
+// api for vendor bank details approval
 route.post("/api/vendor/purchase/bankDetailApproved/:id", bankDetailApproved);
 
 route.post("/api/vendor/purchase/approvedVendor/:id", vendorApproved);
@@ -34,5 +43,8 @@ route.post("/api/vendors/form/:id", upload.fields([
     { name: 'msmeCertificateFile', maxCount: 1 },
     { name: 'panFile', maxCount: 1 }
 ]), vendorForm);
+
+// api for vendor edit details
+route.patch("/api/vendor/editDetails/:id", editVendorDetails)
 
 module.exports = route;
