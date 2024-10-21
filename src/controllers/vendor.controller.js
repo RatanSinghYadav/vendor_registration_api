@@ -66,6 +66,7 @@ const addVendor = async (req, res) => {
             to: email,
             subject: "Vendor Form Link",
             html: `<p>Please fill out this form: <a href="${vendorLink}">Form Link</a></p>`,
+            
         };
 
         await transporter.sendMail(mailOptions);
