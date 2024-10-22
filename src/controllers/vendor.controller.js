@@ -65,8 +65,45 @@ const addVendor = async (req, res) => {
             from: process.env.EMAIL_USER,
             to: email,
             subject: "Vendor Form Link",
-            html: `<p>Please fill out this form: <a href="${vendorLink}">Form Link</a></p>`,
-            
+            html: `
+            <!DOCTYPE html>
+                    <html>
+                      <head>
+                        <link href="https://fonts.cdnfonts.com/css/coca-cola-ii" rel="stylesheet">
+                      </head>
+                      <body>
+                          <p>Dear Vendor,</p>
+                            <p>We hope this email finds you well.</p>
+                            <p>Please click on the link below to complete the vendor registration form. Note that this link will be valid for only 24 hours.</p>
+                            <p>Please fill out this Vendor Registration Form: <a href="${vendorLink}">Form Link</a></p>
+                            
+                            <p>Thank you for your cooperation.</p>
+                            
+                            <!-- Signature Section -->
+                            <p style="font-size:16px; font-weight:bold; color:#e60000; margin-top:20px;">
+                                Thanks & Regards,
+                            </p>
+                            
+                            <p style="font-size:16px; font-weight:bold; color:#e60000; margin-bottom:0;">
+                                B-54-58, Brindavan Beverages Pvt Ltd.<br/>
+                                Parsakhera Industrial Area, Parsakhera<br>
+                                Bareilly (UP) PIN-243502
+                            </p>
+                            
+                            <!-- Logos/Text Representation -->
+                            <div style="margin-top:20px;">
+                                <span style="font-size:50px; font-style:italic; color:#e60000; font-family: 'Coca Cola ii', freestyle script; margin-right:10px;">
+                                  Coca-Cola
+                                </span>
+                                <span style="font-size:50px;">|</span>
+                                <span style="font-size:50px; color:#ffcc00; font-weight:bold; margin-right:10px;">SLMG Beverages</span>
+                                <span style="font-size:50px;">|</span>
+                                <span style="font-size:40px; color:#ff0000; font-weight:bold;">We are Great Place To Work Certified™</span>
+                            </div>
+                      </body>
+                    </html>
+            `,
+
         };
 
         await transporter.sendMail(mailOptions);
