@@ -22,10 +22,10 @@ const addVendor = async (req, res) => {
         registeredMSME, pan, businessAddressProof, bankAccountDetails, gstCertificate, bankName,
         accountName, accountNumber, confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
         gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile, purchaseType,
-        purchaseCategory, paymentTerms, vendorApprovedBy
+        purchaseCategory, paymentTerms, vendorApprovedBy, vendorType,
     } = req.body;
     try {
-        console.log(name, email)
+        // console.log(name, email)
 
         const formLink = `https://vendor-registration-webapp.onrender.com/vendor/form/${email}`;
 
@@ -41,14 +41,14 @@ const addVendor = async (req, res) => {
             bankAccountDetails, gstCertificate, bankName, accountName, accountNumber,
             confirmAccountNumber, bankIFSC, bankAccountCancelChequeFile, incorporationCertificateFile,
             gstRegistrationCertificateFile, principalBusinessProofFile, msmeCertificateFile,
-            purchaseType, purchaseCategory, paymentTerms, vendorApprovedBy,
+            purchaseType, purchaseCategory, paymentTerms, vendorApprovedBy, vendorType,
             formLink // Also adding formLink to the vendor
         });
 
         const vendor = await newVendor.save();
 
 
-        console.log(vendor)
+        // console.log(vendor)
 
         const vendorLink = `https://vendor-registration-webapp.onrender.com/vendor/form/${vendor._id}`
 
@@ -113,9 +113,33 @@ const addVendor = async (req, res) => {
     }
 };
 
-const getVendorsData = async (req, res) => {
+// Get all vendors data
+
+const getAllVendorsData = async (req, res) => {
     try {
         const vendor = await Vendor.find().sort({ createdAt: -1 });
+        // console.log(vendor);
+        res.status(201).json({ success: true, message: 'vendors data find successfuly...', vendor });
+    } catch (error) {
+        res.status(404).json({ success: false, message: 'failed to get vendors data.' })
+        console.log('failed to get vendors data.', error)
+    }
+}
+
+const getVendorsData = async (req, res) => {
+    try {
+        const userRole = req.params.role;
+
+        // console.log(userRole);
+
+        let filter = {};
+        if (userRole === 'LE2') {
+            filter.vendorType = 'LE2';
+        } else if (userRole === 'BRLY') {
+            filter.vendorType = 'BRLY';
+        }
+
+        const vendor = await Vendor.find(filter).sort({ createdAt: -1 });
         // console.log(vendor);
         res.status(201).json({ success: true, message: 'vendors data find successfuly...', vendor });
     } catch (error) {
@@ -129,6 +153,9 @@ const vendorForm = async (req, res) => {
     const { id } = req.params;
     const files = req.files; // Assuming multiple files are uploaded
     const body = req.body; // Other form fields
+
+    const vendorExist = Vendor.findById({ _id: id });
+    console.log(vendorExist);
 
     try {
 
@@ -175,8 +202,8 @@ const vendorForm = async (req, res) => {
             })
             : null;
 
-        console.log("Uploading incorporation certificate:", bankAccountCancelChequeFile);
-        console.log("Incorporation Certificate Upload Result:", incorporationCertificate);
+        // console.log("Uploading incorporation certificate:", bankAccountCancelChequeFile);
+        // console.log("Incorporation Certificate Upload Result:", incorporationCertificate);
 
 
 
@@ -308,7 +335,7 @@ const downloadVendorFileById = async (req, res) => {
         // File redirect kare Cloudinary par
         res.redirect(fileUrl);
 
-        console.log(fileUrl);
+        // console.log(fileUrl);
 
     } catch (error) {
         console.log('Error downloading file:', error);
@@ -337,7 +364,7 @@ const deleteVendorById = async (req, res) => {
 const bankDetailApproved = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id);
+        // console.log(id);
 
         const vendor = await Vendor.findByIdAndUpdate({ _id: id }, { approveBankDetail: "approved" }, { new: true });
 
@@ -356,7 +383,7 @@ const bankDetailApproved = async (req, res) => {
 const vendorApproved = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id);
+        // console.log(id);
 
         const vendor = await Vendor.findByIdAndUpdate({ _id: id }, { vendorApproved: "approved" }, { new: true });
 
@@ -409,7 +436,9 @@ const approvedByPurchase = async (req, res) => {
 const editVendorDetails = async (req, res) => {
     try {
         const { id } = req.params;
-        // const body = req.body;
+        const body = req.body;
+
+        // console.log(body.vendorName);
 
         // console.log(
         //     id,
@@ -477,6 +506,7 @@ const editVendorDetails = async (req, res) => {
             {
                 // Company Profile
                 vendorCode: req.body.vendorCode,
+                name: req.body.vendorName,
                 companyName: req.body.companyName,
                 proprietorName: req.body.proprietorName,
                 businessNature: req.body.businessNature,
@@ -556,5 +586,6 @@ module.exports = {
     downloadVendorFileById,
     bankDetailApproved,
     vendorApproved,
-    editVendorDetails
+    editVendorDetails,
+    getAllVendorsData
 }

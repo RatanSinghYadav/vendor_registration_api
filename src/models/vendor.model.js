@@ -98,7 +98,15 @@ const vendorSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
-    vendorApprovedBy: { type: String, default: null },
+    vendorApprovedBy: {
+        type: String,
+        default: null
+    },
+    vendorType: {
+        type: String,
+        enum: ['LE2', 'BRLY', 'Admin'],
+        default: null
+    },
 }, {
     timestamps: true
 }
