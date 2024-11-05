@@ -27,10 +27,14 @@ const userSchema = new mongoose.Schema({
         enum: ['LE2', 'BRLY', "Admin"],
         default: null
     },
-    vendors: {
+    department: {
+        type: String,
+        default: null
+    },
+    vendors: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'vendor_master'
-    }
+    }]
 },
     {
         timestamps: true
