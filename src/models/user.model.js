@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         enum: ['LE2', 'BRLY', "Admin"],
         default: null
     },
-    department: {
+    department: { 
         type: String,
         default: null
     },
