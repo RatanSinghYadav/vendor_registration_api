@@ -27,7 +27,7 @@ const addVendor = async (req, res) => {
     try {
         // console.log(name, email)
 
-        const formLink = `https://vendor-registration-webapp.onrender.com/vendor/form/${email}`;
+        const formLink = `https://vendor-registration-app.onrender.com/vendor/form/${email}`;
 
         // New vendor object with all fields from the request body
         const newVendor = new Vendor({
@@ -50,7 +50,7 @@ const addVendor = async (req, res) => {
 
         // console.log(vendor)
 
-        const vendorLink = `https://vendor-registration-webapp.onrender.com/vendor/form/${vendor._id}`
+        const vendorLink = `https://vendor-registration-app.onrender.com/vendor/form/${vendor._id}`
 
         // Email Send Functionality
         let transporter = nodemailer.createTransport({
