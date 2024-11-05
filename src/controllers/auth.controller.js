@@ -63,7 +63,7 @@ const userSignup = async (req, res) => {
         res.status(500).json({ success: false, message: "Registration failed!" });
     }
 };
-
+  
 
 const userLogin = async (req, res) => {
     const { email, password, role } = req.body;

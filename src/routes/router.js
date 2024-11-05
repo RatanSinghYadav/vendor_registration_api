@@ -50,7 +50,7 @@ route.post("/api/vendor/purchase/bankDetailApproved/:id", verifyToken, bankDetai
 
 route.post("/api/vendor/purchase/approvedVendor/:id", verifyToken, vendorApproved);
 
-route.get("/api/vendor/download/:field/:id", verifyToken, downloadVendorFileById)
+route.get("/api/vendor/download/:field/:id", downloadVendorFileById)
 
 // Vendor form submission route (with file uploads)
 route.post("/api/vendors/form/:id", upload.fields([
