@@ -5,7 +5,8 @@ const { addVendor, vendorForm,
     deleteVendorById, approvedByPurchase,
     downloadVendorFileById, bankDetailApproved, vendorApproved,
     editVendorDetails, 
-    getAllVendorsData} = require("../controllers/vendor.controller.js");
+    getAllVendorsData,
+    updateVendorCode} = require("../controllers/vendor.controller.js");
 const { userSignup, userLogin } = require('../controllers/auth.controller.js');
 const verifyToken = require('../middleware/verifyToken.js');
 const verifyUser = require('../middleware/verifyUser.js');
@@ -37,20 +38,20 @@ route.get("/api/vendors/:role", verifyToken, getVendorsData);
 route.post("/api/vendors/add", verifyToken, addVendor);
 
 // api for fetch vendor details
-route.get("/api/vendor/details/:id", verifyToken, getVendorById)
+route.get("/api/vendor/details/:id", verifyToken, getVendorById);
 
 // api for vendor delete
 route.delete("/api/vendor/delete/:id", verifyToken, deleteVendorById);
 
 // api for vendor approval
-route.post("/api/vendor/purchase/:id", verifyToken, approvedByPurchase);
+route.patch("/api/vendor/purchase/:id", verifyToken, approvedByPurchase);
 
 // api for vendor bank details approval
 route.post("/api/vendor/purchase/bankDetailApproved/:id", verifyToken, bankDetailApproved);
 
 route.post("/api/vendor/purchase/approvedVendor/:id", verifyToken, vendorApproved);
 
-route.get("/api/vendor/download/:field/:id", downloadVendorFileById)
+route.get("/api/vendor/download/:field/:id", downloadVendorFileById);
 
 // Vendor form submission route (with file uploads)
 route.post("/api/vendors/form/:id", upload.fields([
@@ -63,6 +64,9 @@ route.post("/api/vendors/form/:id", upload.fields([
 ]), vendorForm);
 
 // api for vendor edit details
-route.patch("/api/vendor/editDetails/:id", verifyToken, editVendorDetails)
+route.patch("/api/vendor/editDetails/:id", verifyToken, editVendorDetails);
+
+// update vendor code
+route.patch("/api/vendor/updateVendorCode/:id", verifyToken, updateVendorCode);
 
 module.exports = route;

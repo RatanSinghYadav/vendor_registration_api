@@ -107,6 +107,15 @@ const vendorSchema = new mongoose.Schema({
         enum: ['LE2', 'BRLY', 'Admin'],
         default: null
     },
+    // 
+    approvedByFinance: {
+        type: String,
+        default: null,
+    },
+    remark: {
+        type: String,
+        default: null,
+    },
 }, {
     timestamps: true
 }

@@ -383,9 +383,18 @@ const bankDetailApproved = async (req, res) => {
 const vendorApproved = async (req, res) => {
     try {
         const { id } = req.params;
+        const body = req.body;
         // console.log(id);
 
-        const vendor = await Vendor.findByIdAndUpdate({ _id: id }, { vendorApproved: "approved" }, { new: true });
+        const vendor = await Vendor.findByIdAndUpdate(
+            { _id: id },
+            {
+                approvedByFinance: body.approvedByFinance,
+                remark: body.remark,
+                vendorApproved: "approved",
+                status: "approved"
+            },
+            { new: true });
 
         if (!vendor) {
             res.status(404).json({ success: false, message: 'faild to approved vendor' });
@@ -414,7 +423,6 @@ const approvedByPurchase = async (req, res) => {
                 purchaseCategory: purchaseCategory,
                 paymentTerms: paymentTerms,
                 vendorApprovedBy: vendorApprovedBy,
-                status: "approved"
             },
             { new: true },
         );
@@ -438,7 +446,7 @@ const editVendorDetails = async (req, res) => {
         const { id } = req.params;
         const body = req.body;
 
-        // console.log(body.vendorName);
+        console.log(body.vendorName);
 
         // console.log(
         //     id,
@@ -575,6 +583,36 @@ const editVendorDetails = async (req, res) => {
 };
 
 
+const updateVendorCode = async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+
+    // console.log(id);
+    // console.log(body.vendorCode);
+
+    // Ensure that the ID is valid and provided
+    if (!id) {
+        return res.status(400).json({ success: false, message: 'Vendor ID is required' });
+    }
+
+    // Update vendor code with PATCH method
+
+    const vendor = await Vendor.findByIdAndUpdate(
+        { _id: id },
+        { vendorCode: req.body.vendorCode },
+        { new: true, runValidators: true }
+    )
+
+    // If vendor not found
+    if (!vendor) {
+        return res.status(404).json({ success: false, message: 'Vendor not found' });
+    }
+
+    // Successfully updated
+    res.status(200).json({ success: true, message: 'Vendor details updated successfully', vendor });
+
+}
+
 
 module.exports = {
     addVendor,
@@ -587,5 +625,6 @@ module.exports = {
     bankDetailApproved,
     vendorApproved,
     editVendorDetails,
-    getAllVendorsData
+    getAllVendorsData,
+    updateVendorCode
 }
