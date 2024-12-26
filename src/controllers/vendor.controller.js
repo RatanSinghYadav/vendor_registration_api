@@ -391,6 +391,7 @@ const vendorApproved = async (req, res) => {
             {
                 approvedByFinance: body.approvedByFinance,
                 remark: body.remark,
+                vendorTDS: body.req.vendorTDS,
                 vendorApproved: "approved",
                 status: "approved"
             },
@@ -405,6 +406,33 @@ const vendorApproved = async (req, res) => {
     } catch (error) {
         console.log("faild to approve bank details ", error);
         res.status(404).json({ success: false, message: 'faild to approve bank details', error })
+    }
+}
+
+const vendorRejectedByFinance = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = req.body;
+        // console.log(id);
+
+        const vendor = await Vendor.findByIdAndUpdate(
+            { _id: id },
+            {
+                approvedByFinance: body.approvedByFinance,
+                remark: body.remark,
+                status: "rejected"
+            },
+            { new: true });
+
+        if (!vendor) {
+            res.status(404).json({ success: false, message: 'faild to rejeted vendor' });
+            return
+        }
+
+        res.status(201).json({ success: true, message: 'rejected by finance department', vendor })
+    } catch (error) {
+        console.log("faild to approve bank details ", error);
+        res.status(404).json({ success: false, message: 'faild to rejected bank details', error })
     }
 }
 
@@ -423,6 +451,8 @@ const approvedByPurchase = async (req, res) => {
                 purchaseCategory: purchaseCategory,
                 paymentTerms: paymentTerms,
                 vendorApprovedBy: vendorApprovedBy,
+                vendorRequestedPerson: req.body.vendorRequestedPerson,
+                vendorRequestedPersonNum: req.body.vendorRequestedPersonNum
             },
             { new: true },
         );
@@ -626,5 +656,6 @@ module.exports = {
     vendorApproved,
     editVendorDetails,
     getAllVendorsData,
-    updateVendorCode
+    updateVendorCode,
+    vendorRejectedByFinance
 }

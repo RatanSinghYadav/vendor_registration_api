@@ -102,6 +102,14 @@ const vendorSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    vendorRequestedPerson: {
+        type: String,
+        default: null
+    },
+    vendorRequestedPersonNum: {
+        type: String,
+        default: null
+    },
     vendorType: {
         type: String,
         enum: ['LE2', 'BRLY', 'Admin'],
@@ -111,6 +119,10 @@ const vendorSchema = new mongoose.Schema({
     approvedByFinance: {
         type: String,
         default: null,
+    },
+    vendorTDS: {
+        type: String,
+        default: null
     },
     remark: {
         type: String,
