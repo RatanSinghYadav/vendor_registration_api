@@ -4,9 +4,10 @@ const { addVendor, vendorForm,
     getVendorsData, getVendorById,
     deleteVendorById, approvedByPurchase,
     downloadVendorFileById, bankDetailApproved, vendorApproved,
-    editVendorDetails, 
+    editVendorDetails,
     getAllVendorsData,
-    updateVendorCode} = require("../controllers/vendor.controller.js");
+    updateVendorCode,
+    vendorRejectedByFinance } = require("../controllers/vendor.controller.js");
 const { userSignup, userLogin } = require('../controllers/auth.controller.js');
 const verifyToken = require('../middleware/verifyToken.js');
 const verifyUser = require('../middleware/verifyUser.js');
@@ -68,5 +69,8 @@ route.patch("/api/vendor/editDetails/:id", verifyToken, editVendorDetails);
 
 // update vendor code
 route.patch("/api/vendor/updateVendorCode/:id", verifyToken, updateVendorCode);
+
+// vendor rejected
+route.patch("/api/vendor/rejectedVendor/:id", verifyToken, vendorRejectedByFinance);
 
 module.exports = route;
