@@ -127,7 +127,7 @@ const vendorSchema = new mongoose.Schema({
     remark: {
         type: String,
         default: null,
-    },
+    }, 
 }, {
     timestamps: true
 }

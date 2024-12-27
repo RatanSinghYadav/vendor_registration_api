@@ -50,7 +50,7 @@ route.patch("/api/vendor/purchase/:id", verifyToken, approvedByPurchase);
 // api for vendor bank details approval
 route.post("/api/vendor/purchase/bankDetailApproved/:id", verifyToken, bankDetailApproved);
 
-route.post("/api/vendor/purchase/approvedVendor/:id", verifyToken, vendorApproved);
+route.patch("/api/vendor/purchase/approvedVendor/:id", verifyToken, vendorApproved);
 
 route.get("/api/vendor/download/:field/:id", downloadVendorFileById);
 
@@ -61,7 +61,7 @@ route.post("/api/vendors/form/:id", upload.fields([
     { name: 'gstRegistrationCertificateFile', maxCount: 1 },
     { name: 'principalBusinessProofFile', maxCount: 1 },
     { name: 'msmeCertificateFile', maxCount: 1 },
-    { name: 'panFile', maxCount: 1 }
+    { name: 'panFile', maxCount: 1 } 
 ]), vendorForm);
 
 // api for vendor edit details
