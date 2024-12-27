@@ -385,7 +385,6 @@ const vendorApproved = async (req, res) => {
         const { id } = req.params;
         const body = req.body;
         // console.log(id);
-defaultunChecked
         const vendor = await Vendor.findByIdAndUpdate(
             { _id: id },
             {
