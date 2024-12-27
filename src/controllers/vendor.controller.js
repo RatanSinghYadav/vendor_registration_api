@@ -385,13 +385,13 @@ const vendorApproved = async (req, res) => {
         const { id } = req.params;
         const body = req.body;
         // console.log(id);
-
+defaultunChecked
         const vendor = await Vendor.findByIdAndUpdate(
             { _id: id },
             {
                 approvedByFinance: body.approvedByFinance,
                 remark: body.remark,
-                vendorTDS: body.req.vendorTDS,
+                vendorTDS: body.vendorTDS,
                 vendorApproved: "approved",
                 status: "approved"
             },
@@ -452,7 +452,8 @@ const approvedByPurchase = async (req, res) => {
                 paymentTerms: paymentTerms,
                 vendorApprovedBy: vendorApprovedBy,
                 vendorRequestedPerson: req.body.vendorRequestedPerson,
-                vendorRequestedPersonNum: req.body.vendorRequestedPersonNum
+                vendorRequestedPersonNum: req.body.vendorRequestedPersonNum,
+                status:'complete'
             },
             { new: true },
         );
@@ -539,10 +540,11 @@ const editVendorDetails = async (req, res) => {
         }
 
         // Update vendor details with PATCH method
-        const vendor = await Vendor.findByIdAndUpdate(
+        const vendor = await Vendor.findByIdAndUpdate( 
             { _id: id }, // ID filter
-            {
+            { 
                 // Company Profile
+                status: "complete",
                 vendorCode: req.body.vendorCode,
                 name: req.body.vendorName,
                 companyName: req.body.companyName,
