@@ -211,7 +211,7 @@ const vendorForm = async (req, res) => {
         const vendor = await Vendor.findByIdAndUpdate(
             { _id: id },
             {
-                status: "complete",
+                status: "filled",
                 incorporationCertificateFile: incorporationCertificate ? incorporationCertificate.secure_url : undefined,
                 bankAccountCancelChequeFile: bankAccountCancelChequeFile ? bankAccountCancelChequeFile.secure_url : undefined,
                 gstRegistrationCertificateFile: gstRegistrationCertificate ? gstRegistrationCertificate.secure_url : undefined,
