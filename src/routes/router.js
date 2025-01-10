@@ -39,7 +39,7 @@ route.get("/api/vendors/:role", verifyToken, getVendorsData);
 route.post("/api/vendors/add", verifyToken, addVendor);
 
 // api for fetch vendor details
-route.get("/api/vendor/details/:id", verifyToken, getVendorById);
+route.get("/api/vendor/details/:id", getVendorById);
 
 // api for vendor delete
 route.delete("/api/vendor/delete/:id", verifyToken, deleteVendorById);
