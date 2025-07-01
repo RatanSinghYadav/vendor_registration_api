@@ -9,6 +9,7 @@ const { addVendor, vendorForm,
     updateVendorCode,
     vendorRejectedByFinance } = require("../controllers/vendor.controller.js");
 const { userSignup, userLogin } = require('../controllers/auth.controller.js');
+const { getAllUsers, createUser, updateUser, changePassword, deleteUser, getUserStats } = require('../controllers/user.controller.js');
 const verifyToken = require('../middleware/verifyToken.js');
 const verifyUser = require('../middleware/verifyUser.js');
 
@@ -72,5 +73,13 @@ route.patch("/api/vendor/updateVendorCode/:id", verifyToken, updateVendorCode);
 
 // vendor rejected
 route.patch("/api/vendor/rejectedVendor/:id", verifyToken, vendorRejectedByFinance);
+
+// User management routes for admin
+route.get('/api/users', verifyToken, getAllUsers);
+route.post('/api/users', verifyToken, createUser);
+route.patch('/api/users/:id', verifyToken, updateUser);
+route.patch('/api/users/:id/password', verifyToken, changePassword);
+route.delete('/api/users/:id', verifyToken, deleteUser);
+route.get('/api/users/stats', verifyToken, getUserStats);
 
 module.exports = route;
